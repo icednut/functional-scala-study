@@ -8,7 +8,7 @@ import org.scalatest.FunSuite
  **/
 class TreeFarmTest extends FunSuite {
 
-  test("트리의 잎과 가지의 개수를 셀 수 있어야 한다.") {
+  test("[연습문제 3.25] 트리의 잎과 가지의 개수를 셀 수 있어야 한다.") {
     val tree = Branch(
       Branch(
         Leaf("a"),
@@ -23,7 +23,7 @@ class TreeFarmTest extends FunSuite {
     assert(sizeResult == (3, 4))
   }
 
-  test("트리의 잎과 가지의 개수를 셀 수 있어야 한다. 2") {
+  test("[연습문제 3.25] 트리의 잎과 가지의 개수를 셀 수 있어야 한다. 2") {
     val tree = Branch(
       Branch(
         Branch(
@@ -41,7 +41,7 @@ class TreeFarmTest extends FunSuite {
     assert(sizeResult == (4, 5))
   }
 
-  test("Int 트리에서 가장 큰 요소를 구할 수 있어야 한다.") {
+  test("[연습문제 3.26] Int 트리에서 가장 큰 요소를 구할 수 있어야 한다.") {
     val givenMaxValue = 212
     val tree: Tree[Int] = Branch(
       Branch(
@@ -60,7 +60,7 @@ class TreeFarmTest extends FunSuite {
     assert(result == givenMaxValue)
   }
 
-  test("트리의 루트에서 가장 깊은 리프까지의 경로의 길이를 구할 수 있어야 한다.") {
+  test("[연습문제 3.27] 트리의 루트에서 가장 깊은 리프까지의 경로의 길이를 구할 수 있어야 한다.") {
     val tree = Branch(
       Branch(
         Branch(
@@ -78,7 +78,7 @@ class TreeFarmTest extends FunSuite {
     assert(maxDepth == 4)
   }
 
-  test("트리의 루트에서 가장 깊은 리프까지의 경로의 길이를 구할 수 있어야 한다. 2") {
+  test("[연습문제 3.27] 트리의 루트에서 가장 깊은 리프까지의 경로의 길이를 구할 수 있어야 한다. 2") {
     val tree = Branch(
       Branch(
         Branch(
@@ -123,7 +123,7 @@ class TreeFarmTest extends FunSuite {
     assert(maxDepth == 10)
   }
 
-  test("map 함수를 통해 트리의 value를 변경할 수 있어야 한다.") {
+  test("[연습문제 3.28] map 함수를 통해 트리의 value를 변경할 수 있어야 한다.") {
     val tree = Branch(
       Branch(
         Leaf(1),
@@ -160,5 +160,60 @@ class TreeFarmTest extends FunSuite {
         }
       }
     }
+  }
+
+  test("[연습문제 3.29] fold 함수로 size를 구현해보자.") {
+    val tree: Tree[String] = Branch(
+      Branch(
+        Leaf("a"),
+        Leaf("b")
+      ),
+      Branch(
+        Leaf("c"),
+        Leaf("d")
+      )
+    )
+
+    val result = TreeFarm.sizeWithFold(tree, (0: Int, 0: Int))
+    assert(result == (3, 4))
+  }
+
+  test("[연습문제 3.29] fold 함수로 maximum을 구현해보자.") {
+    val givenMaxValue = 212
+    val tree: Tree[Int] = Branch(
+      Branch(
+        Branch(
+          Leaf(1),
+          Leaf(givenMaxValue)
+        ),
+        Leaf(11)
+      ),
+      Branch(
+        Leaf(5),
+        Leaf(87)
+      )
+    )
+
+    val result = TreeFarm.maximumWithFold(tree, 0)
+    assert(result == givenMaxValue)
+  }
+
+  test("[연습문제 3.29] fold 함수로 maxDepth를 구현해보자.") {
+    val tree = Branch(
+      Branch(
+        Branch(
+          Leaf("a"),
+          Leaf("aa")
+        ),
+        Leaf("b")
+      ),
+      Branch(
+        Leaf("c"),
+        Leaf("d")
+      )
+    )
+
+    val maxDepth = TreeFarm.maxDepthWithFold(tree, (0, 0))
+    assert(maxDepth._2 == 4)
   }
 }

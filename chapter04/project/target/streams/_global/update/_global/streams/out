@@ -1,0 +1,3 @@
+[debug] "not up to date. inChanged = true, force = false
+[debug] Updating ProjectRef(uri("file:/Users/kakaopay/workspace/study/functional-scala-study/chapter04/project/"), "chapter04-build")...
+[debug] Done updating ProjectRef(uri("file:/Users/kakaopay/workspace/study/functional-scala-study/chapter04/project/"), "chapter04-build")
