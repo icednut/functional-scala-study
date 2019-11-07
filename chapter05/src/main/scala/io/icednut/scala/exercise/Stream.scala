@@ -34,7 +34,23 @@ sealed trait Stream[+A] {
   }
 
   def drop(value: Int): Stream[A] = {
-    ???
+    def go(nextTake: Int, nextStream: Stream[A]): Stream[A] = {
+      nextStream match {
+        case Cons(h, t) => {
+          val newNextTake = nextTake - 1
+          if (newNextTake >= 0) {
+            go(newNextTake, t())
+          } else {
+            val newHead = h()
+            val newTail = go(newNextTake, t())
+            Stream.cons(newHead, newTail)
+          }
+        }
+        case Empty => nextStream
+      }
+    }
+
+    go(value, this)
   }
 }
 
