@@ -52,6 +52,23 @@ sealed trait Stream[+A] {
 
     go(value, this)
   }
+
+  def takeWhile(p: A => Boolean): Stream[A] = {
+    def go(nextStream: Stream[A]): Stream[A] = {
+      nextStream match {
+        case Cons(h, t) => {
+          if (p(h())) {
+            Stream.cons(h(), go(t()))
+          } else {
+            go(t())
+          }
+        }
+        case Empty => nextStream
+      }
+    }
+
+    go(this)
+  }
 }
 
 case object Empty extends Stream[Nothing]
