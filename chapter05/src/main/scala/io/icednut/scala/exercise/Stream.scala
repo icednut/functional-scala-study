@@ -4,6 +4,8 @@ package io.icednut.scala.exercise
  * @author will.109
  * @date 04/11/2019
  **/
+import Stream._
+
 sealed trait Stream[+A] {
 
   def toList(): List[A] = {
