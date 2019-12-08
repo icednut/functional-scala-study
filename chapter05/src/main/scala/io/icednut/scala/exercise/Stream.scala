@@ -4,6 +4,7 @@ package io.icednut.scala.exercise
  * @author will.109
  * @date 04/11/2019
  **/
+
 import Stream._
 
 sealed trait Stream[+A] {
@@ -71,6 +72,22 @@ sealed trait Stream[+A] {
 
     go(this)
   }
+
+  def exists(p: A => Boolean): Boolean = this match {
+    case Cons(h, t) => p(h()) || t().exists(p)
+    case _ => false
+  }
+
+  def foldRight[B](z: => B)(f: (A, => B) => B): B =
+    this match {
+      case Cons(h, t) => f(h(), t().foldRight(z)(f))
+      case _ => z
+    }
+
+  def existsByFoldRight(p: A => Boolean): Boolean =
+    foldRight(false)((a, b) => p(a) || b)
+
+  def forAll(p: A => Boolean): Boolean = ???
 }
 
 case object Empty extends Stream[Nothing]
